@@ -74,6 +74,7 @@ def get_domain(target):
 	data = table.split(",")
 	for d in data:
 		if len(d) > 10:
+			d = d.replace(" ", "")
 			d = d.replace("]","")
 			if check_domain_mongodb(target, d):
 				print "[INFO]" + str(d) + " in " + str(target) + " already insert ..."
