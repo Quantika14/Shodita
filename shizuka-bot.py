@@ -59,7 +59,7 @@ def insert_mongodb(ip, dominio):
 
 def check_domain_mongodb(ip, dominio):
 	global client, db
-	if db.Shodita.find({"ip":ip, "domain": dominio}).count() >= 1:
+	if db.Shodita.find({"ip":ip, "dominio": dominio}).count() >= 1:
 		return True
 	else:
 		return False
