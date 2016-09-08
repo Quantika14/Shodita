@@ -19,10 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #EMAIL: JORGE@QUANTIKA14.COM               ##
 #############################################
 #***********BOT PRINCIPAL******************##
-#BOT NAME: NOBITA                          ##
-#BOT ENCARGADO DE OBTENER EL               ## 
-#BANNER_GRABBING DE LAS IPS GENERADAS      ##
-#POR EL BOT                                ##
+#BOT NAME: SHIZUKA                         ##
+#BOT ENCARGADO DE OBTENER LOS DOMINIOS     ## 
+#ASOCIADOS A UNA MISMA IP CON ROBTEX       ##
 #############################################
 
 import urllib, urllib2, re, time
