@@ -1,5 +1,5 @@
-#!/usr/bin/python  
-''' 
+#!/usr/bin/python
+'''
 Copyright (C) 2016  QuantiKa14 Servicios Integrales S.L
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #############################################
 #***********BOT PRINCIPAL******************##
 #BOT NAME: SUNEO                           ##
-#BOT ENCARGADO DE DETECTAR CMS EN LOS      ## 
+#BOT ENCARGADO DE DETECTAR CMS EN LOS      ##
 #DOMINIOS OBTENIDOS POR SHIZUKA-BOT.PY     ##
 #############################################
 import re, time, urllib2, httplib
@@ -92,7 +92,7 @@ def detect_wp(html, dominio):
 							if h1:
 								return True
 					except urllib2.HTTPError, e:
-						continue 
+						continue
 					except urllib2.URLError, e:
 						continue
 					except httplib.HTTPException, e:
@@ -149,5 +149,5 @@ def get_target():
 				continue
 def main():
 	get_target()
-if __name__ == '__main__':  
+if __name__ == '__main__':
 	main()

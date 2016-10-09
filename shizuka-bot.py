@@ -1,5 +1,5 @@
-#!/usr/bin/python  
-''' 
+#!/usr/bin/python
+'''
 Copyright (C) 2016  QuantiKa14 Servicios Integrales S.L
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #############################################
 #***********BOT PRINCIPAL******************##
 #BOT NAME: SHIZUKA                         ##
-#BOT ENCARGADO DE OBTENER LOS DOMINIOS     ## 
+#BOT ENCARGADO DE OBTENER LOS DOMINIOS     ##
 #ASOCIADOS A UNA MISMA IP CON ROBTEX       ##
 #############################################
 
@@ -81,7 +81,7 @@ def get_domain(target):
 			else:
 				insert_mongodb(target, d)
 				print colores.verde + "[INFO]" + str(d) + " in " + str(target) + " insert ..." + colores.normal
-				
+
 def get_target():
 	global client, db
 	cursor = db.Shodita.find({"port":80})
@@ -90,5 +90,5 @@ def get_target():
 
 def main():
 	get_target()
-if __name__ == '__main__':  
+if __name__ == '__main__':
 	main()
