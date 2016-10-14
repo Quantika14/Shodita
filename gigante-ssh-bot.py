@@ -75,7 +75,6 @@ def check_sshBF(ip):
 	user="root"
 	for p in passwords:
 		ssh = paramiko.SSHClient()
-		starttime=time.clock()
 		ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 		try:
 			print colores.verde + "|----[INFO] Try user: root password: " + p + colores.normal
