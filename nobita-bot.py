@@ -27,8 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import socket, urllib, sys, os, time, json
 from pymongo import MongoClient
-
-portList = [21,22,23,25,53,63,80,110,143,161,443,500,513,520,559,27017,3389,5000,7547,8069,8080] 
+portList = [21,22,23,25,53,63,80,90,110,143,161,443,500,513,520,559,3306,3389,5000,5050, 5060, 8069,8080, 9443,27017, 28017] 
 totalPuertos =  len(portList)
 ip_root = ""
 
@@ -36,7 +35,7 @@ def insert_mongodb(IP, Country, City, regionName, ISP, Port, Banner, Latitud, Lo
 	try:
 		client = MongoClient()
 		db = client.test
-		cursor = db.Shodita.insert({"ip":IP, "country": Country, "city": City, "region_name": regionName, "isp": ISP, "port": Port, "banner": Banner, "latitud": Latitud, "longitud": Longitud, "date_insert": date_Insert, "date_Update": date_Update})
+		cursor = db.Shodita.insert({"ip":IP, "country": Country, "city": City, "region_name": regionName, "isp": ISP, "port": Port, "banner": Banner, "latitud": Latitud, "longitud": Longitud, "date_insert": date_Insert, "date_Update": date_Update, "bot":"Nobita"})
 		print "[INFO] INSERT IN DB"
 	except:
 		print "[WARNING]ERROR INSERT MONGODB"
