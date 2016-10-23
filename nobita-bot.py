@@ -81,40 +81,37 @@ def porcentaje(portID):
 	
 def main():  
 	global portList, totalPuertos, ip_address
-	#***CAMBIAR SEGÚN EL TOTAL DE IPS A ESCANEAR***
-
-	#for x1 in range(1,256):
-	#	for x2 in range(0,256):
-	#		for x3 in range(0,256):
-	#**********************************************
-	for x4 in range(0,256):
-		for port in portList:  
-			#ip_address = str(x1) + "." + str(x2) + "." + str(x3) + "." + str(x4)
-			ip_address = ip_root + str(x4)
-			porc = str(porcentaje(portList.index(port)))
-			print "[INFO] " + str(ip_address) + " " + port + " " + porc + "%"
-			#Obtenemos el mensaje del servidor en el puerto 
-			if port == 80 or port == 8080 or 27017 or 28017:
-				Banner = banner_grabbing_web(ip_address, port)
-			else:
-				Banner = banner_grabbing(ip_address,port)
-
-			if Banner == "none":
-				pass
-			else:
-				#Variables obtenidas de la geoIp
-				data_geoIP = geoIp(ip_address)
-				data_geoIP = json.load(data_geoIP)
-				Country = data_geoIP["country"]
-				City = data_geoIP["city"]
-				regionName = data_geoIP["regionName"]
-				ISP = data_geoIP["isp"]
-				Latitud = data_geoIP["lat"]
-				Longitud = data_geoIP["lon"]
-				date_Insert = time.strftime("%H:%M:%S")
-				date_Update = "none"
-				#Mandamos los datos a la función encargada de insertarlos en mongoDB
-				insert_mongodb(ip_address, Country, City, regionName, ISP, port, Banner, Latitud, Longitud, date_Insert, date_Update)
-						
+	f = open("dic/targets.txt", "r")
+	targets = f.readlines()
+	for target in targets:
+		target = target.replace("\n", "")
+		for x1 in range(0,256):
+			print "----------------------------------------"
+			for x2 in range(0,256):
+				ip_address = target + str(x1) + "." + str(x2)
+				print "[INFO] Connecting to: " + ip_address
+				for port in portList:
+					porc = str(porcentaje(portList.index(port)))
+					print "|----[!] " + str(ip_address) + " -> " + str(port) + " " + porc + "%"
+					#Obtenemos el mensaje del servidor en el puerto 
+					if port == 80 or port == 8080 or 27017 or 28017:
+						Banner = banner_grabbing_web(ip_address, port)
+					else:
+						Banner = banner_grabbing(ip_address,port)
+					if Banner == "none":
+						pass
+					else:
+						#Variables obtenidas de la geoIp
+						data_geoIP = geoIp(ip_address)
+						data_geoIP = json.load(data_geoIP)
+						Country = data_geoIP["country"]
+						City = data_geoIP["city"]
+						regionName = data_geoIP["regionName"]
+						ISP = data_geoIP["isp"]
+						Latitud = data_geoIP["lat"]
+						Longitud = data_geoIP["lon"]
+						date_Insert = time.strftime("%H:%M:%S")
+						date_Update = "none"
+						insert_mongodb(ip_address, Country, City, regionName, ISP, port, Banner, Latitud, Longitud, date_Insert, date_Update)
 if __name__ == '__main__':  
 	main()  
