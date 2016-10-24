@@ -61,42 +61,36 @@ def get_html_without_subdomain(target):
 	except urllib2.URLError, e:
 		return "False"
 
-def get_html(target):
-	url = "http://" + str(target)
-	print colores.verde + "[INFO] Generate URL: " + colores.normal + str(url)
-	opener = urllib2.build_opener()
-	opener.addheaders = [('User-Agent', 'Mozilla/5.0')]
-	html = opener.open('http://www.stackoverflow.com').read()
-	return html
-
 def detect_wp(html, dominio):
 	soup = BeautifulSoup(html, "html.parser")
-	#Buscamos wp-content en el html
-	try:
-		if html.find("wp-content")>0:
+	try:	
+		#Buscamos generator
+		gen = soup.findAll(attrs={"name":"generator"})
+		if "Wordpress" in str(gen):
 			return True
-		else:
-	#Buscamos links con xmlrpc.php
-			links = soup.findAll("link")
-			for l in links:
-				if "xmlrpc.php" in str(l):
-					return True
-				else:
-	#Buscamos el readme.html
-					try:
-						url = "http://" + dominio + "/readme.html"
-						html = urllib.urlopen(url).read()
-						soup = BeautifulSoup(html)
-						for h1 in soup.find_all('h1', {'id':"logo"}):
-							h1 = remove_tags(str(h1)) #PARSER
-							if h1:
-								return True
-					except urllib2.HTTPError, e:
-						continue 
-					except urllib2.URLError, e:
-						continue
-					except httplib.HTTPException, e:
-						continue
+		else: #Buscamos wp-content en el html
+			if html.find("wp-content")>0:
+				return True
+			else:#Buscamos links con xmlrpc.php
+				links = soup.findAll("link")
+				for l in links:
+					if "xmlrpc.php" in str(l):
+						return True
+					else:#Buscamos el readme.html
+						try:
+							url = "http://" + dominio + "/readme.html"
+							html = urllib.urlopen(url).read()
+							soup = BeautifulSoup(html)
+							for h1 in soup.find_all('h1', {'id':"logo"}):
+								h1 = remove_tags(str(h1)) #PARSER
+								if h1:
+									return True
+						except urllib2.HTTPError, e:
+							continue 
+						except urllib2.URLError, e:
+							continue
+						except httplib.HTTPException, e:
+							continue
 	except:
 		return False
 
