@@ -26,10 +26,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #############################################
 
 import socket, urllib, sys, os, time, json
+import GeoIP
+
 from pymongo import MongoClient
 portList = [21,22,23,25,53,63,80,90,110,143,161,443,500,513,520,559,3306,3389,5000,5050, 5060, 8069,8080, 9443,27017, 28017] 
 totalPuertos =  len(portList)
 ip_root = ""
+
+timeout = 3
 
 def insert_mongodb(IP, Country, City, regionName, ISP, Port, Banner, Latitud, Longitud, date_Insert, date_Update):
 	try:
@@ -41,14 +45,18 @@ def insert_mongodb(IP, Country, City, regionName, ISP, Port, Banner, Latitud, Lo
 		print "[WARNING]ERROR INSERT MONGODB"
 
 def geoIp(IP):
-	return urllib.urlopen("http://ip-api.com/json/" + str(IP))
+	# return urllib.urlopen("http://ip-api.com/json/" + str(IP))
+	gi = GeoIP.open("/usr/share/GeoIP/GeoIPCity.dat", GeoIP.GEOIP_STANDARD)
+	gir = gi.record_by_addr(IP)
+	print gir
+	return gir
 
 '''Grab Banner'''
 def banner_grabbing_web(ip_address,port):  
 	global portList
 	try:  
 		s=socket.socket()  
-		s.settimeout(5.0)
+		s.settimeout(timeout)
 		s.connect((ip_address,port))
 		s.send("GET HTTP/1.1 \r\n")
 		banner = s.recv(2048)  
@@ -75,7 +83,7 @@ def banner_grabbing(ip_address,port):
 
 def porcentaje(portID):
 	global portList, totalPuertos
-	total = portID * 100
+	total = (portID + 1) * 100
 	total = total / totalPuertos
 	return total
 	
@@ -87,7 +95,7 @@ def main():
 		target = target.replace("\n", "")
 		for x1 in range(0,256):
 			print "----------------------------------------"
-			for x2 in range(0,256):
+			for x2 in range(1,255):
 				ip_address = target + str(x1) + "." + str(x2)
 				print "[INFO] Connecting to: " + ip_address
 				for port in portList:
@@ -103,15 +111,20 @@ def main():
 					else:
 						#Variables obtenidas de la geoIp
 						data_geoIP = geoIp(ip_address)
-						data_geoIP = json.load(data_geoIP)
-						Country = data_geoIP["country"]
-						City = data_geoIP["city"]
-						regionName = data_geoIP["regionName"]
-						ISP = data_geoIP["isp"]
-						Latitud = data_geoIP["lat"]
-						Longitud = data_geoIP["lon"]
+						if data_geoIP:
+							Country = data_geoIP["country_name"]
+							City = data_geoIP["city"]
+							regionName = data_geoIP["region_name"]
+							# ISP = data_geoIP["isp"]
+							Latitud = data_geoIP["latitude"]
+							Longitud = data_geoIP["longitude"]
+							ISP = "null"
+						else:
+							ip_address = Country = City = regionName = ISP = Latitud = Longitud = "null"
 						date_Insert = time.strftime("%H:%M:%S")
 						date_Update = "none"
 						insert_mongodb(ip_address, Country, City, regionName, ISP, port, Banner, Latitud, Longitud, date_Insert, date_Update)
+
 if __name__ == '__main__':  
-	main()  
+	main() 
+
