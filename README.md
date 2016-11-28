@@ -5,17 +5,25 @@ Un conjunto de bots creados en Python que recogen los datos de los banner grabbi
  - Python 2.7
  - MongoDB >= 2.6.10
 
-# Bot Nobita
+# Bot Nobita-bot.py
 - Encargado de enviar peticiones y almacenar los banner grabbing de los diferentes puertos del target.
+- Dependencias -> socket, urllib, sys, os, time, json, GeoIP, pymongo
 
-# Bot Shizuka
+# Bot Shizuka-bot.py
 - Encarga de obtener los dominios asociacidos a la misma IP que tenga el puerto 80 abierto.
+- Dependencias -> urllib, urllib2, re, time, pymongo, bs4
 
-# Bot Suneo
+# Bot Suneo-bot.py
 - Encargado de clasificar los diferentes dominios webs por WordPress, Joomla y Drupal.
+- Dependencias -> re, time, urllib2, httplib, pymongo, MongoClient, bs4, urllib2, Request
 
-# Bot Gigante
+# Bot Suneo-whois-libreborme.py
+- Encargado de obtener la información del titular de un dominio y cruzar los datos con LibreBorme.
+- Dependencias -> re, time, urllib2, httplib, whois, json, pymongo, bs4
+
+# Bot Gigante-ssh-bot.py
 - Encargado de realizar comprobaciones de fuerza bruta en servicios SSH y FTP.
+- Dependencias -> paramiko, time, sys, os, socket, pymongo, MongoClient
 
 # Contacto
 - Twitter: @jorgewebsec
