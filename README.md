@@ -25,6 +25,10 @@ Un conjunto de bots creados en Python que recogen los datos de los banner grabbi
 - Encargado de realizar comprobaciones de fuerza bruta en servicios SSH y FTP.
 - Dependencias -> paramiko, time, sys, os, socket, pymongo, MongoClient
 
+# Bot nobisuke_nobi-bot.py
+- Encargado de buscar servicios web en rangos IP y realizar un screenshot.
+- Dependencias -> Firefox, pymongo, MongoClient, sys, os, threading, urllib2, time, selenium, netaddr
+
 # Contacto
 - Twitter: @jorgewebsec
 - Email: jorge@quantika14.com
